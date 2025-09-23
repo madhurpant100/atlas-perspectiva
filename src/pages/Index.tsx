@@ -3,6 +3,8 @@ import Header from '../components/Header';
 import SearchInput from '../components/SearchInput';
 import FeatureBar from '../components/FeatureBar';
 import PlusDropdown from '../components/PlusDropdown';
+import AppliedFilters from '../components/AppliedFilters';
+import FilterSection from '../components/FilterSection';
 import RecentQueries from '../components/RecentQueries';
 
 const Index: React.FC = () => {
@@ -24,6 +26,12 @@ const Index: React.FC = () => {
         
         {/* Feature Bar */}
         <FeatureBar />
+        
+        {/* Applied Filters */}
+        <AppliedFilters />
+        
+        {/* Filter Section */}
+        <FilterSection />
         
         {/* Recent Queries */}
         <RecentQueries />

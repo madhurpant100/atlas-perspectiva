@@ -40,6 +40,10 @@ export default {
           hover: "hsl(var(--card-hover))",
           border: "hsl(var(--card-border))",
         },
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
+        },
         muted: {
           foreground: "hsl(210 20% 65%)",
         }
