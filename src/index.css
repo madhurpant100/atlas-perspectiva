@@ -2,95 +2,48 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Atlas Design System - Perplexity/ChatGPT Plus Inspired */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-
-    --radius: 0.5rem;
-
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
+    /* Atlas Dark Theme Colors */
+    --background: 220 13% 9%;
     --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --surface: 220 13% 11%;
+    --surface-elevated: 220 13% 13%;
+    --surface-hover: 220 13% 15%;
+    
+    /* Atlas Accent System */
+    --primary: 237 94% 66%;
+    --primary-hover: 237 94% 72%;
+    --primary-foreground: 210 40% 98%;
+    
+    /* Atlas Semantic Colors */
+    --border: 220 13% 20%;
+    --border-subtle: 220 13% 16%;
+    --input: 220 13% 13%;
+    --input-border: 220 13% 20%;
+    --input-focus: 237 94% 66%;
+    
+    /* Atlas Interactive Elements */
+    --pill-background: 220 13% 13%;
+    --pill-hover: 220 13% 16%;
+    --pill-active: 237 94% 66%;
+    --pill-text: 210 20% 85%;
+    --pill-text-active: 210 40% 98%;
+    
+    /* Atlas Cards */
+    --card: 220 13% 11%;
+    --card-hover: 220 13% 13%;
+    --card-border: 220 13% 16%;
+    
+    /* Atlas Shadows */
+    --shadow-subtle: 0px 1px 3px rgba(0, 0, 0, 0.2);
+    --shadow-medium: 0px 4px 12px rgba(0, 0, 0, 0.25);
+    --shadow-active: 0px 0px 20px rgba(99, 102, 241, 0.3);
+    
+    --radius: 0.75rem;
+    --radius-pill: 9999px;
   }
 }
 
@@ -100,6 +53,105 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
+    background: linear-gradient(135deg, hsl(var(--background)) 0%, hsl(220 13% 8%) 100%);
+    min-height: 100vh;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   }
+  
+  /* Atlas Typography */
+  .atlas-title {
+    @apply text-3xl font-bold bg-gradient-to-r from-primary to-primary-hover bg-clip-text text-transparent;
+  }
+  
+  .atlas-subtitle {
+    @apply text-lg text-muted-foreground font-medium;
+  }
+}
+
+@layer components {
+  /* Atlas Pill Components */
+  .atlas-pill {
+    @apply relative inline-flex items-center gap-2 px-4 py-2.5 rounded-pill 
+           bg-pill-background text-pill-text border border-border-subtle
+           transition-all duration-200 ease-out cursor-pointer
+           hover:bg-pill-hover hover:scale-[1.02] hover:shadow-medium
+           focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background
+           select-none font-medium text-sm;
+  }
+  
+  .atlas-pill-active {
+    @apply bg-pill-active text-pill-text-active border-primary shadow-active scale-[1.02];
+  }
+  
+  .atlas-pill-icon {
+    @apply text-base leading-none;
+  }
+  
+  /* Atlas Input Components */
+  .atlas-input {
+    @apply w-full px-6 py-4 bg-input border border-input-border rounded-2xl
+           text-foreground placeholder:text-muted-foreground
+           transition-all duration-200 ease-out
+           focus:outline-none focus:border-input-focus focus:ring-1 focus:ring-input-focus
+           text-lg font-medium;
+  }
+  
+  .atlas-search-container {
+    @apply relative flex items-center;
+  }
+  
+  .atlas-search-button {
+    @apply absolute right-3 p-2 rounded-xl bg-primary text-primary-foreground
+           hover:bg-primary-hover transition-colors duration-200
+           focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background;
+  }
+  
+  /* Atlas Card Components */
+  .atlas-card {
+    @apply bg-card border border-card-border rounded-2xl p-4
+           transition-all duration-200 ease-out cursor-pointer
+           hover:bg-card-hover hover:border-border hover:shadow-medium;
+  }
+  
+  /* Atlas Dropdown */
+  .atlas-dropdown {
+    @apply absolute top-full right-0 mt-2 p-2 bg-surface-elevated border border-border
+           rounded-2xl shadow-medium min-w-48 z-50
+           animate-in fade-in-0 zoom-in-95 duration-200;
+  }
+  
+  /* Atlas Plus Button */
+  .atlas-plus-button {
+    @apply flex items-center justify-center w-12 h-12 rounded-pill
+           bg-surface-elevated border border-border text-foreground
+           hover:bg-surface-hover hover:scale-105 hover:shadow-medium
+           focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background
+           transition-all duration-200 ease-out cursor-pointer;
+  }
+}
+
+/* Atlas Animations */
+@keyframes atlas-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+@keyframes atlas-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.atlas-animate-pulse {
+  animation: atlas-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.atlas-animate-slide-up {
+  animation: atlas-slide-up 0.3s ease-out;
 }
