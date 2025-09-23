@@ -14,7 +14,7 @@ const DATE_PRESETS = [
 ];
 
 const DateFilter: React.FC = () => {
-  const { state, setDatePreset, setCustomDateRange, addFilter } = useAtlas();
+  const { state, setDatePreset, setCustomDateRange, addFilter, removeFilter } = useAtlas();
   const { selectedDatePreset, customDateRange } = state;
   const [showCustomRange, setShowCustomRange] = useState(false);
 
@@ -22,24 +22,55 @@ const DateFilter: React.FC = () => {
     const preset = DATE_PRESETS.find(p => p.id === presetId);
     if (!preset) return;
     
-    setDatePreset(presetId);
-    const range = preset.getValue();
+    // Clear custom range if preset is selected
+    if (customDateRange.from || customDateRange.to) {
+      setCustomDateRange({ from: undefined, to: undefined });
+    }
     
-    // Add or update date filter
-    const dateFilterId = 'date-filter';
-    addFilter({
-      id: dateFilterId,
-      type: 'date',
-      label: 'Timeframe',
-      value: preset.label
-    });
+    // Toggle preset selection
+    if (selectedDatePreset === presetId) {
+      setDatePreset('');
+      // Remove date filter
+      const existingFilter = state.appliedFilters.find(f => f.type === 'date');
+      if (existingFilter) {
+        removeFilter(existingFilter.id);
+      }
+    } else {
+      setDatePreset(presetId);
+      
+      // Remove existing date filter first
+      const existingFilter = state.appliedFilters.find(f => f.type === 'date');
+      if (existingFilter) {
+        removeFilter(existingFilter.id);
+      }
+      
+      // Add new date filter
+      const dateFilterId = `date-filter-${Date.now()}`;
+      addFilter({
+        id: dateFilterId,
+        type: 'date',
+        label: 'Timeframe',
+        value: preset.label
+      });
+    }
   };
 
   const handleCustomRangeSelect = (range: DateRange) => {
     setCustomDateRange(range);
     
     if (range.from && range.to) {
-      const dateFilterId = 'date-filter';
+      // Clear preset selection if custom range is selected
+      if (selectedDatePreset) {
+        setDatePreset('');
+      }
+      
+      // Remove existing date filter first
+      const existingFilter = state.appliedFilters.find(f => f.type === 'date');
+      if (existingFilter) {
+        removeFilter(existingFilter.id);
+      }
+      
+      const dateFilterId = `date-filter-${Date.now()}`;
       const formattedRange = `${format(range.from, 'MMM d')} - ${format(range.to, 'MMM d, yyyy')}`;
       
       addFilter({

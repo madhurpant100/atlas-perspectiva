@@ -49,7 +49,6 @@ export interface AtlasState {
   appliedFilters: Filter[];
   selectedDatePreset: string | null;
   customDateRange: DateRange;
-  isFilterDropdownOpen: boolean;
 }
 
 // Action Types
@@ -63,9 +62,7 @@ type AtlasAction =
   | { type: 'REMOVE_FILTER'; payload: string }
   | { type: 'CLEAR_ALL_FILTERS' }
   | { type: 'SET_DATE_PRESET'; payload: string }
-  | { type: 'SET_CUSTOM_DATE_RANGE'; payload: DateRange }
-  | { type: 'TOGGLE_FILTER_DROPDOWN' }
-  | { type: 'CLOSE_FILTER_DROPDOWN' };
+  | { type: 'SET_CUSTOM_DATE_RANGE'; payload: DateRange };
 
 // Initial State
 const initialState: AtlasState = {
@@ -76,7 +73,6 @@ const initialState: AtlasState = {
   appliedFilters: [],
   selectedDatePreset: null,
   customDateRange: { from: undefined, to: undefined },
-  isFilterDropdownOpen: false,
 };
 
 // Reducer
@@ -99,8 +95,7 @@ const atlasReducer = (state: AtlasState, action: AtlasAction): AtlasState => {
     case 'ADD_FILTER':
       return { 
         ...state, 
-        appliedFilters: [...state.appliedFilters, action.payload],
-        isFilterDropdownOpen: false 
+        appliedFilters: [...state.appliedFilters, action.payload]
       };
     case 'REMOVE_FILTER':
       return { 
@@ -126,10 +121,6 @@ const atlasReducer = (state: AtlasState, action: AtlasAction): AtlasState => {
         customDateRange: action.payload,
         selectedDatePreset: null
       };
-    case 'TOGGLE_FILTER_DROPDOWN':
-      return { ...state, isFilterDropdownOpen: !state.isFilterDropdownOpen };
-    case 'CLOSE_FILTER_DROPDOWN':
-      return { ...state, isFilterDropdownOpen: false };
     default:
       return state;
   }
@@ -149,8 +140,6 @@ interface AtlasContextType {
   clearAllFilters: () => void;
   setDatePreset: (preset: string) => void;
   setCustomDateRange: (range: DateRange) => void;
-  toggleFilterDropdown: () => void;
-  closeFilterDropdown: () => void;
 }
 
 const AtlasContext = createContext<AtlasContextType | undefined>(undefined);
@@ -199,14 +188,6 @@ export const AtlasProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     dispatch({ type: 'SET_CUSTOM_DATE_RANGE', payload: range });
   };
 
-  const toggleFilterDropdown = () => {
-    dispatch({ type: 'TOGGLE_FILTER_DROPDOWN' });
-  };
-
-  const closeFilterDropdown = () => {
-    dispatch({ type: 'CLOSE_FILTER_DROPDOWN' });
-  };
-
   return (
     <AtlasContext.Provider value={{
       state,
@@ -221,8 +202,6 @@ export const AtlasProvider: React.FC<{ children: ReactNode }> = ({ children }) =
       clearAllFilters,
       setDatePreset,
       setCustomDateRange,
-      toggleFilterDropdown,
-      closeFilterDropdown,
     }}>
       {children}
     </AtlasContext.Provider>
