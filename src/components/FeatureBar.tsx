@@ -1,34 +1,31 @@
 import React from 'react';
 import { useAtlas } from '../context/AtlasContext';
-import { FEATURES } from '../context/AtlasContext';
+import { BarChart3, LineChart, PieChart } from 'lucide-react';
 
 const FeatureBar: React.FC = () => {
   const { state, selectFeature } = useAtlas();
+  const { selectedFeature } = state;
+
+  const features = [
+    { id: 'bar', name: 'Bar Chart', icon: <BarChart3 className="w-5 h-5" /> },
+    { id: 'line', name: 'Line Chart', icon: <LineChart className="w-5 h-5" /> },
+    { id: 'pie', name: 'Pie Chart', icon: <PieChart className="w-5 h-5" /> },
+  ];
 
   return (
-    <div 
-      className="flex flex-wrap justify-center gap-2 sm:gap-3 atlas-animate-slide-up"
-      style={{ animationDelay: '0.2s' }}
-      role="toolbar"
-      aria-label="Analytics features"
-    >
-      {FEATURES.map((feature, index) => (
+    <div className="flex flex-wrap gap-3 mb-6">
+      {features.map((feature) => (
         <button
           key={feature.id}
           onClick={() => selectFeature(feature.id)}
-          className={`atlas-pill ${
-            state.selectedFeature === feature.id ? 'atlas-pill-active' : ''
+          className={`flex items-center gap-2 px-4 py-3 rounded-lg border transition-all duration-200 ${
+            selectedFeature === feature.id
+              ? 'bg-primary text-primary-foreground border-primary'
+              : 'bg-surface-elevated text-foreground border-border-subtle hover:bg-surface-hover'
           }`}
-          tabIndex={index === 0 ? 0 : -1}
-          role="button"
-          aria-pressed={state.selectedFeature === feature.id}
-          aria-label={`${feature.label} feature`}
         >
-          <span className="atlas-pill-icon" role="img" aria-hidden="true">
-            {feature.icon}
-          </span>
-          <span className="hidden sm:inline">{feature.label}</span>
-          <span className="sm:hidden text-xs">{feature.label.split(' ')[0]}</span>
+          {feature.icon}
+          <span className="font-medium">{feature.name}</span>
         </button>
       ))}
     </div>

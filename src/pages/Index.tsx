@@ -6,41 +6,49 @@ import PlusDropdown from '../components/PlusDropdown';
 import AppliedFilters from '../components/AppliedFilters';
 import FilterSection from '../components/FilterSection';
 import RecentQueries from '../components/RecentQueries';
+import AddFiltersModal from '../components/AddFiltersModal';
+import { useAtlas } from '../context/AtlasContext';
 
 const Index: React.FC = () => {
+  const { state } = useAtlas();
+  const { isDropdownOpen } = state;
+
   return (
     <div className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-8 max-w-6xl">
+      <div className="container mx-auto px-8 py-10 max-w-7xl">
         {/* Header */}
         <Header />
         
         {/* Search Input with Plus Button */}
-        <div className="flex flex-col lg:flex-row items-start gap-4 justify-center mb-8">
-          <div className="flex-1 w-full max-w-4xl">
-            <SearchInput />
-          </div>
-          <div className="shrink-0">
+        <div className="flex items-center gap-3 mt-10 mb-8">
+          <div className="flex-shrink-0">
             <PlusDropdown />
+          </div>
+          <div className="flex-1">
+            <SearchInput />
           </div>
         </div>
         
         {/* Feature Bar */}
-        <div className="mb-8">
-          <FeatureBar />
-        </div>
+        <FeatureBar />
         
         {/* Applied Filters */}
-        <div className="mb-6">
-          <AppliedFilters />
+        <AppliedFilters />
+        
+        {/* Main Content Area */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-10">
+          {/* Filter Section - Left Side */}
+          <div className="lg:col-span-1">
+            <FilterSection />
+          </div>
+          
+          {/* Recent Queries - Right Side */}
+          <div className="lg:col-span-2">
+            <RecentQueries />
+          </div>
         </div>
         
-        {/* Filter Section */}
-        <div className="mb-8">
-          <FilterSection />
-        </div>
-        
-        {/* Recent Queries */}
-        <RecentQueries />
+        {isDropdownOpen && <AddFiltersModal />}
       </div>
     </div>
   );

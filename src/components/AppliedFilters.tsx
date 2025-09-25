@@ -9,14 +9,14 @@ const AppliedFilters: React.FC = () => {
   if (appliedFilters.length === 0) return null;
 
   return (
-    <div className="bg-surface border border-border-subtle rounded-2xl p-4">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
-        <h3 className="text-sm font-medium text-foreground">
+    <div className="bg-surface border border-border-subtle rounded-lg p-3 text-sm shadow-sm">
+      <div className="flex items-center justify-between gap-2 mb-3">
+        <h3 className="font-medium text-foreground">
           Applied Filters ({appliedFilters.length})
         </h3>
         <button
           onClick={clearAllFilters}
-          className="text-xs text-primary hover:text-primary-hover transition-colors self-start sm:self-auto"
+          className="text-primary hover:text-primary-hover transition-colors text-sm font-medium"
         >
           Clear all
         </button>
@@ -26,16 +26,22 @@ const AppliedFilters: React.FC = () => {
         {appliedFilters.map((filter) => (
           <div
             key={filter.id}
-            className="inline-flex items-center gap-2 px-3 py-1.5 bg-pill-background border border-border-subtle rounded-pill text-sm text-pill-text max-w-full"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-pill-background border border-border-subtle rounded-lg text-pill-text max-w-full"
           >
             <span className="font-medium text-primary shrink-0">{filter.label}:</span>
-            <span className="truncate">{filter.value}</span>
+            {filter.values ? (
+              <span className="truncate">
+                {filter.values.join(', ')}
+              </span>
+            ) : (
+              <span className="truncate">{filter.value}</span>
+            )}
             <button
               onClick={() => removeFilter(filter.id)}
-              className="ml-1 p-0.5 hover:bg-surface-hover rounded-full transition-colors shrink-0"
+              className="ml-1 hover:bg-surface-hover rounded-full p-0.5 transition-colors shrink-0"
               aria-label={`Remove ${filter.label} filter`}
             >
-              <X className="w-3 h-3" />
+              <X className="w-3.5 h-3.5" />
             </button>
           </div>
         ))}

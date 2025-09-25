@@ -8,9 +8,11 @@ import { cn } from '../lib/utils';
 
 const DATE_PRESETS = [
   { id: 'today', label: 'Today', getValue: () => ({ from: new Date(), to: new Date() }) },
-  { id: 'last7', label: 'Last 7 Days', getValue: () => ({ from: subDays(new Date(), 6), to: new Date() }) },
-  { id: 'last30', label: 'Last 30 Days', getValue: () => ({ from: subDays(new Date(), 29), to: new Date() }) },
-  { id: 'thisMonth', label: 'This Month', getValue: () => ({ from: startOfMonth(new Date()), to: new Date() }) },
+  { id: 'last7days', label: 'Last 7 days', getValue: () => ({ from: subDays(new Date(), 6), to: new Date() }) },
+  { id: 'last30days', label: 'Last 30 days', getValue: () => ({ from: subDays(new Date(), 29), to: new Date() }) },
+  { id: 'last60days', label: 'Last 60 days', getValue: () => ({ from: subDays(new Date(), 59), to: new Date() }) },
+  { id: 'last90days', label: 'Last 90 days', getValue: () => ({ from: subDays(new Date(), 89), to: new Date() }) },
+  { id: 'last1year', label: 'Last 1 year', getValue: () => ({ from: subDays(new Date(), 364), to: new Date() }) },
 ];
 
 const DateFilter: React.FC = () => {

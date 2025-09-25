@@ -55,15 +55,12 @@ const PlusDropdown: React.FC = () => {
     <div className="relative">
       <button
         ref={buttonRef}
-        onClick={toggleDropdown}
-        className="atlas-plus-button"
-        aria-label="More features"
+        onClick={() => toggleDropdown('filter')}
+        className="p-3 rounded-lg bg-primary text-primary-foreground hover:bg-primary-hover transition-colors duration-200"
+        aria-label="Add filter"
         aria-expanded={state.isDropdownOpen}
-        aria-haspopup="true"
       >
-        <Plus size={20} className={`transition-transform duration-200 ${
-          state.isDropdownOpen ? 'rotate-45' : ''
-        }`} />
+        <Plus className="w-5 h-5" />
       </button>
 
       {state.isDropdownOpen && (

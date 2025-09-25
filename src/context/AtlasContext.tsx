@@ -34,6 +34,7 @@ export interface Filter {
   type: string;
   label: string;
   value: string;
+  values?: string[];
 }
 
 export interface DateRange {
@@ -59,6 +60,7 @@ type AtlasAction =
   | { type: 'CLOSE_DROPDOWN' }
   | { type: 'SET_SEARCH_FROM_RECENT'; payload: string }
   | { type: 'ADD_FILTER'; payload: Filter }
+  | { type: 'ADD_MULTI_FILTER'; payload: Filter }
   | { type: 'REMOVE_FILTER'; payload: string }
   | { type: 'CLEAR_ALL_FILTERS' }
   | { type: 'SET_DATE_PRESET'; payload: string }
@@ -97,6 +99,27 @@ const atlasReducer = (state: AtlasState, action: AtlasAction): AtlasState => {
         ...state, 
         appliedFilters: [...state.appliedFilters, action.payload]
       };
+    case 'ADD_MULTI_FILTER':
+      // For multi-filters, check if we already have a filter of the same type
+      const existingFilterIndex = state.appliedFilters.findIndex(
+        filter => filter.label === action.payload.label
+      );
+      
+      if (existingFilterIndex >= 0) {
+        // Replace the existing filter
+        const updatedFilters = [...state.appliedFilters];
+        updatedFilters[existingFilterIndex] = action.payload;
+        return {
+          ...state,
+          appliedFilters: updatedFilters
+        };
+      } else {
+        // Add as a new filter
+        return {
+          ...state,
+          appliedFilters: [...state.appliedFilters, action.payload]
+        };
+      }
     case 'REMOVE_FILTER':
       return { 
         ...state, 
@@ -136,6 +159,7 @@ interface AtlasContextType {
   closeDropdown: () => void;
   setSearchFromRecent: (query: string) => void;
   addFilter: (filter: Filter) => void;
+  addMultiFilter: (filter: Filter) => void;
   removeFilter: (filterId: string) => void;
   clearAllFilters: () => void;
   setDatePreset: (preset: string) => void;
@@ -172,6 +196,10 @@ export const AtlasProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     dispatch({ type: 'ADD_FILTER', payload: filter });
   };
 
+  const addMultiFilter = (filter: Filter) => {
+    dispatch({ type: 'ADD_MULTI_FILTER', payload: filter });
+  };
+
   const removeFilter = (filterId: string) => {
     dispatch({ type: 'REMOVE_FILTER', payload: filterId });
   };
@@ -198,6 +226,7 @@ export const AtlasProvider: React.FC<{ children: ReactNode }> = ({ children }) =
       closeDropdown,
       setSearchFromRecent,
       addFilter,
+      addMultiFilter,
       removeFilter,
       clearAllFilters,
       setDatePreset,
