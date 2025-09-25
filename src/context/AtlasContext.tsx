@@ -33,7 +33,7 @@ export interface Filter {
   id: string;
   type: string;
   label: string;
-  value: string;
+  value?: string;
   values?: string[];
 }
 

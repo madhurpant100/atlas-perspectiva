@@ -55,7 +55,7 @@ const PlusDropdown: React.FC = () => {
     <div className="relative">
       <button
         ref={buttonRef}
-        onClick={() => toggleDropdown('filter')}
+        onClick={toggleDropdown}
         className="p-3 rounded-lg bg-primary text-primary-foreground hover:bg-primary-hover transition-colors duration-200"
         aria-label="Add filter"
         aria-expanded={state.isDropdownOpen}

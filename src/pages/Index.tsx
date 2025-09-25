@@ -48,7 +48,7 @@ const Index: React.FC = () => {
           </div>
         </div>
         
-        {isDropdownOpen && <AddFiltersModal />}
+        
       </div>
     </div>
   );
